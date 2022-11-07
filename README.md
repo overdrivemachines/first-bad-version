@@ -21,6 +21,11 @@ Example 2:
 
 Input: n = 1, bad = 1
 Output: 1
+
+Example 3:
+
+Input: n = 1792997410, bad = 1240808008
+Output: 1240808008
 ```
 
 1 <= bad <= n <= 231 - 1

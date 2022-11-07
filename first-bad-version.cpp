@@ -6,7 +6,7 @@ bool isBadVersion(int version);  // API which returns whether version is bad.
 int firstBadVersion(int n);
 
 int main(int argc, char const *argv[]) {
-  cout << "first bad version: " << firstBadVersion(3) << endl;
+  cout << "first bad version: " << firstBadVersion(1792997410) << endl;
   return 0;
 }
 
@@ -30,24 +30,40 @@ int firstBadVersion(int n) {
     return 1;
 
   while ((end - start) >= 0) {
-    mid = (end - start) / 2;
-    if ((isBadVersion(start) == false) && (isBadVersion(start + 1) == true)) {
-      return (start + 1);
-    }
-
-    if ((isBadVersion(end) == true) && (isBadVersion(end - 1) == false)) {
-      return end;
-    }
-    if (isBadVersion(mid) == true) {
-      // mid version is bad that means our first bad version is
-      // between the start and mid
+    mid = ((end - start) / 2) + start;
+    if (isBadVersion(mid)) {
+      // cout << start << "-" << end << " mid: " << mid << " is bad" << endl;
+      // mid is bad
+      // check mid-1
+      if (!isBadVersion(mid - 1)) {
+        // mid-1 is good
+        return (mid);
+      }
+      // the first bad is between start and mid
       start++;
+      // TOD0: if new start is bad, return start-1
       end = mid - 1;
     } else {
-      // mid version is good that means our first bad version is
-      // between mid and end
+      // mid is good
+      // cout << start << "-" << end << " mid: " << mid << " is good" << endl;
+      // check mid+1
+      if (isBadVersion(mid + 1)) {
+        // mid+1 is bad
+        return (mid + 1);
+      }
+      // the first bad is between mid and end
       start = mid + 1;
       end--;
+    }
+
+    // is start bad
+    if (isBadVersion(start)) {
+      return start;
+    }
+
+    // is end good
+    if (isBadVersion(end) == false) {
+      return (end + 1);
     }
   }
   return -1;
@@ -57,7 +73,7 @@ int firstBadVersion(int n) {
 // returns true if the version is bad
 // returns false if the version is good
 bool isBadVersion(int version) {
-  if (version >= 1)
+  if (version >= 1240808008)
     return true;
   else
     return false;
